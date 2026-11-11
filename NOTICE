@@ -1,0 +1,41 @@
+This recipe (scripts and docs) is MIT-licensed; see LICENSE, except
+tools/quant_lm_head.py and tools/quant_embed.py, which are copied unmodified from
+HyperQwen and keep its Apache-2.0 licence (copy in licenses/HyperQwen.LICENSE).
+It builds on, and runs, the following work under their own terms.
+
+Engine
+- vLLM (https://github.com/vllm-project/vllm), Apache-2.0. The image is
+  upstream vLLM's wheel for commit a0d7356b98, the fork's vLLM branch over it and
+  the vllm-cmp170hx plugin, all from https://github.com/AlexBrandes/vllm, also
+  Apache-2.0 (see that repository's NOTICE), on NVIDIA's CUDA 13.0 Ubuntu 24.04
+  base image.
+- The plugin's layout, startup guard and seam tooling are adapted from
+  vllm-sm80 by Morrowmake (https://github.com/Morrowmake/vllm-cmp170hx),
+  Apache-2.0.
+- The engine's Qwen3.8-27B support ports several changes from HyperQwen by
+  syv-ai (https://github.com/syv-ai/HyperQwen), Apache-2.0: the int8 embedding
+  and LM-head loading, the MTP draft vocabulary, the int8-activation Marlin
+  changes and the split-KV speculative-decode attention kernel.
+- The K3 Marlin route dispatcher is generated from vLLM's Marlin host code
+  (Apache-2.0); the INT8 GEMMs use NVIDIA CUTLASS (BSD-3-Clause) headers as
+  shipped in the vLLM wheel.
+
+Model
+- Qwen3.8-27B by the Qwen team, Apache-2.0. The W4A16 checkpoint
+  dbirks/Qwen3.8-27B-W4A16-AutoRound was made with intel/auto-round
+  (Apache-2.0); syvai/qwen3.8-27b-3090-fast-variant (int4 LM head, MTP module,
+  draft vocabulary) is Apache-2.0.
+- The DFlash2 drafter syvai/Qwen3.8-27B-DFlash2-W4A16 is a W4A16 requantization
+  of incoai/Qwen3.8-27B-DFlash2; both Apache-2.0.
+- This repository ships no weights: download.sh fetches them from their model
+  pages.
+
+Benchmarks
+- Speed tables use the sparkDash protocol (MiaAI-Lab/sparkDash, commit
+  3e6d4ef, Apache-2.0); its prompts are used as data with attribution.
+- GSM8K (OpenAI, MIT) as distributed with vLLM's tests/evals/gsm8k, HumanEval
+  (OpenAI, MIT), and GPQA Diamond (Rein et al., CC BY 4.0) with the prompt and
+  answer pattern of OpenAI simple-evals (MIT).
+
+Not affiliated with NVIDIA, the Qwen team, Intel, syv-ai, incoai, the vLLM
+project or any of the projects above.

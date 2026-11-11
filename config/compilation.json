@@ -1,0 +1,5 @@
+{
+  "max_cudagraph_capture_size": 64,
+  "custom_ops": ["+rms_norm", "+silu_and_mul"],
+  "cudagraph_mode": "FULL_AND_PIECEWISE"
+}

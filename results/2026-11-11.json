@@ -1,0 +1,468 @@
+{
+ "schema_version": 1,
+ "measured": "2026-11-11",
+ "hardware": {
+  "gpu": "1x NVIDIA CMP 170HX",
+  "memory_gib_per_gpu": 40,
+  "sm_count_per_gpu": 74,
+  "power_w_per_gpu": 170,
+  "pcie": "Gen2 x4 per GPU",
+  "gpu_p2p": false,
+  "driver": "610.43.02"
+ },
+ "engine": {
+  "upstream_commit": "a0d7356b98e929c17051bac44f5a086e4117974d",
+  "vllm_branch_commit": "eb0f19d117e35e32631e41be1cced3d98368d776",
+  "plugin_commit": "b03ecee908aaf9abb26b0c97472faa871fd814d1",
+  "measured_source_sha256": [
+   "96eec0b1afc6be6333c10f5232e51a7dca1316e79bb29b4c3ffae6b3917e849a",
+   "15c0fff453911eb0c0d4397bff81d8321c853fd4d5ba5681246bda21e25a7d3d"
+  ],
+  "measured_source_note": "sha256 of the GitHub codeload archives the Dockerfile fetches: vLLM branch, then plugin",
+  "measured_image_id": "sha256:1c9a3796337e3f8ab2ad5d359465a8b99dbe5df32342a18ca5ea715748195920",
+  "published_image": "ghcr.io/alexbrandes/cmp170hx-qwen38-27b@sha256:1c9a3796337e3f8ab2ad5d359465a8b99dbe5df32342a18ca5ea715748195920",
+  "measured_image_build": "docker build --no-cache of this Dockerfile on the measured host",
+  "marlin_routes_sha256": "9dda0204b37de6e95b570076e120971a0e171ac59faeea824474f6fcdd3855da",
+  "int8_library_sha256": "deecce498973ece369cfef8abd13cfc327092b38c91bf5b505a9c9725e23fda4",
+  "note": "the native code is compiled at build time; a rebuild has its own image identity and hashes"
+ },
+ "checkpoint": {
+  "repo": "dbirks/Qwen3.8-27B-W4A16-AutoRound",
+  "revision": "1f05c441c4e64ae0549de44fa9ea5a6d43610314",
+  "assembled_with": {
+   "tools": "HyperQwen prepare/quant_lm_head.py, prepare/quant_embed.py",
+   "fast_variant_repo": "syvai/qwen3.8-27b-3090-fast-variant",
+   "fast_variant_revision": "124c14e7e8c7d2f5402933b9af368e772a9fcf0c"
+  },
+  "file_sha256": "tools/model.sha256"
+ },
+ "drafter": {
+  "repo": "syvai/Qwen3.8-27B-DFlash2-W4A16",
+  "revision": "4d30ec736ffc6b8688dc2ae2b502d9b48bdec279"
+ },
+ "protocol": {
+  "commit": "3e6d4ef",
+  "decode_max_tokens": 400,
+  "depth_decode": "benchlib addition, not sparkDash",
+  "endpoint": "engine-direct",
+  "source": "sparkDash"
+ },
+ "run_ids": [
+  "public-v1.20261111T154808Z.fb19bfc7",
+  "public-v1.20261111T155616Z.197a6536",
+  "public-v1.20261111T160423Z.d7ee945e"
+ ],
+ "settings": {
+  "async-scheduling": true,
+  "attention-backend": "FLASH_ATTN",
+  "cc": "{\"max_cudagraph_capture_size\":64,\"custom_ops\":[\"+rms_norm\",\"+silu_and_mul\"],\"cudagraph_mode\":\"FULL_AND_PIECEWISE\"}",
+  "default-chat-template-kwargs": "{\"enable_thinking\":false}",
+  "enable-auto-tool-choice": true,
+  "enable-prefix-caching": true,
+  "enable-prompt-tokens-details": true,
+  "gpu-memory-utilization": 0.93,
+  "kv-cache-dtype": "auto",
+  "limit-mm-per-prompt": "{\"image\":{\"count\":8},\"video\":{\"count\":1}}",
+  "mamba-ssm-cache-dtype": "float16",
+  "max-model-len": 163840,
+  "max-num-batched-tokens": 8192,
+  "max-num-seqs": 8,
+  "media-io-kwargs": "{\"video\":{\"num_frames\":32}}",
+  "mm-processor-kwargs": "{\"size\":{\"shortest_edge\":65536,\"longest_edge\":2097152},\"cap_pixels_per_frame\":true}",
+  "prefill-chunk-with-decodes": 512,
+  "reasoning-parser": "qwen3",
+  "served-model-name": "qwen3.8-27b",
+  "speculative-config": "{\"method\":\"dflash\",\"model\":\"/draft\",\"num_speculative_tokens\":7}",
+  "tool-call-parser": "qwen3_coder"
+ },
+ "measurement_additions": {
+  "flags": [
+   "--enable-per-request-metrics"
+  ],
+  "note": "benchlib request-scoped timing for concurrent levels; added to a copy of start.sh, otherwise unchanged"
+ },
+ "environment": {
+  "VLLM_CMP_I8MM": "1",
+  "VLLM_CMP_I8MM_LIB": "/opt/cmp170hx/q27/cmp_i8mm.so",
+  "VLLM_CMP_INT8_ACT_FUSION": "1",
+  "VLLM_CMP_MARLIN_ROUTES": "/opt/cmp170hx/q27/marlin_host.so",
+  "VLLM_CMP_MARLIN_ROUTES_SHA256": "9dda0204b37de6e95b570076e120971a0e171ac59faeea824474f6fcdd3855da",
+  "VLLM_CMP_PIECE_BUDGET_MS": "500",
+  "VLLM_CMP_PREFILL_CONTIG_ATTN": "1024",
+  "VLLM_CMP_PREFILL_INT8_ATTN": "4096",
+  "VLLM_CMP_W4A8_PREFILL_MIN_M": "1024",
+  "VLLM_MARLIN_INPUT_DTYPE": "int8",
+  "VLLM_MARLIN_INT8_INCLUDE_RE": "mlp|linear_attn|self_attn",
+  "VLLM_NO_USAGE_STATS": "1",
+  "VLLM_SPEC_ATTN_POLICY": "ga100",
+  "VLLM_SPEC_DECODE_ATTN": "1",
+  "VLLM_USE_FLASHINFER_SAMPLER": "0"
+ },
+ "decode": {
+  "code": [
+   {
+    "concurrency": 1,
+    "aggregate_decode_tps": [
+     351.718,
+     343.407,
+     343.486
+    ],
+    "median_aggregate_decode_tps": 343.486
+   },
+   {
+    "concurrency": 2,
+    "aggregate_decode_tps": [
+     609.671,
+     599.344,
+     608.5
+    ],
+    "median_aggregate_decode_tps": 608.5
+   },
+   {
+    "concurrency": 4,
+    "aggregate_decode_tps": [
+     868.309,
+     921.921,
+     839.004
+    ],
+    "median_aggregate_decode_tps": 868.309
+   },
+   {
+    "concurrency": 8,
+    "aggregate_decode_tps": [
+     1196.023,
+     1233.803,
+     1235.558
+    ],
+    "median_aggregate_decode_tps": 1233.803
+   }
+  ],
+  "json": [
+   {
+    "concurrency": 1,
+    "aggregate_decode_tps": [
+     330.429,
+     325.73,
+     325.727
+    ],
+    "median_aggregate_decode_tps": 325.73
+   },
+   {
+    "concurrency": 2,
+    "aggregate_decode_tps": [
+     558.733,
+     534.646,
+     552.905
+    ],
+    "median_aggregate_decode_tps": 552.905
+   },
+   {
+    "concurrency": 4,
+    "aggregate_decode_tps": [
+     880.44,
+     882.315,
+     864.191
+    ],
+    "median_aggregate_decode_tps": 880.44
+   },
+   {
+    "concurrency": 8,
+    "aggregate_decode_tps": [
+     1208.805,
+     1168.616,
+     1188.04
+    ],
+    "median_aggregate_decode_tps": 1188.04
+   }
+  ],
+  "prose": [
+   {
+    "concurrency": 1,
+    "aggregate_decode_tps": [
+     201.07,
+     196.164,
+     196.797
+    ],
+    "median_aggregate_decode_tps": 196.797
+   },
+   {
+    "concurrency": 2,
+    "aggregate_decode_tps": [
+     331.051,
+     344.247,
+     322.902
+    ],
+    "median_aggregate_decode_tps": 331.051
+   },
+   {
+    "concurrency": 4,
+    "aggregate_decode_tps": [
+     590.95,
+     537.807,
+     549.687
+    ],
+    "median_aggregate_decode_tps": 549.687
+   },
+   {
+    "concurrency": 8,
+    "aggregate_decode_tps": [
+     764.435,
+     741.831,
+     732.162
+    ],
+    "median_aggregate_decode_tps": 741.831
+   }
+  ],
+  "structured": [
+   {
+    "concurrency": 1,
+    "aggregate_decode_tps": [
+     386.812,
+     378.632,
+     378.58
+    ],
+    "median_aggregate_decode_tps": 378.632
+   },
+   {
+    "concurrency": 2,
+    "aggregate_decode_tps": [
+     720.005,
+     705.274,
+     700.118
+    ],
+    "median_aggregate_decode_tps": 705.274
+   },
+   {
+    "concurrency": 4,
+    "aggregate_decode_tps": [
+     1182.351,
+     1126.929,
+     1147.55
+    ],
+    "median_aggregate_decode_tps": 1147.55
+   },
+   {
+    "concurrency": 8,
+    "aggregate_decode_tps": [
+     1546.863,
+     1485.413,
+     1498.217
+    ],
+    "median_aggregate_decode_tps": 1498.217
+   }
+  ]
+ },
+ "prefill": [
+  {
+   "target_tokens": 4096,
+   "prompt_tokens": [
+    4136,
+    4135,
+    4134
+   ],
+   "prefill_tps": [
+    4261.0,
+    4191.4,
+    4208.95
+   ],
+   "median_prefill_tps": 4208.95
+  },
+  {
+   "target_tokens": 8192,
+   "prompt_tokens": [
+    8227,
+    8233,
+    8229
+   ],
+   "prefill_tps": [
+    4268.25,
+    4262.34,
+    4281.58
+   ],
+   "median_prefill_tps": 4268.25
+  },
+  {
+   "target_tokens": 16384,
+   "prompt_tokens": [
+    16421,
+    16418,
+    16426
+   ],
+   "prefill_tps": [
+    4034.86,
+    4000.95,
+    4023.21
+   ],
+   "median_prefill_tps": 4023.21
+  },
+  {
+   "target_tokens": 32768,
+   "prompt_tokens": [
+    32807,
+    32807,
+    32806
+   ],
+   "prefill_tps": [
+    3640.04,
+    3628.55,
+    3627.52
+   ],
+   "median_prefill_tps": 3628.55
+  },
+  {
+   "target_tokens": 65536,
+   "prompt_tokens": [
+    65575,
+    65576,
+    65574
+   ],
+   "prefill_tps": [
+    3064.05,
+    3059.28,
+    3060.43
+   ],
+   "median_prefill_tps": 3060.43
+  },
+  {
+   "target_tokens": 131072,
+   "prompt_tokens": [
+    131111,
+    131107,
+    131112
+   ],
+   "prefill_tps": [
+    2337.49,
+    2334.7,
+    2335.49
+   ],
+   "median_prefill_tps": 2335.49
+  }
+ ],
+ "depth_decode": [
+  {
+   "target_tokens": 4096,
+   "decode_tps": [
+    180.882,
+    184.875,
+    174.19
+   ],
+   "median_decode_tps": 180.882
+  },
+  {
+   "target_tokens": 8192,
+   "decode_tps": [
+    178.08,
+    184.958,
+    183.259
+   ],
+   "median_decode_tps": 183.259
+  },
+  {
+   "target_tokens": 16384,
+   "decode_tps": [
+    168.36,
+    177.03,
+    170.251
+   ],
+   "median_decode_tps": 170.251
+  },
+  {
+   "target_tokens": 32768,
+   "decode_tps": [
+    158.052,
+    159.578,
+    165.233
+   ],
+   "median_decode_tps": 159.578
+  },
+  {
+   "target_tokens": 65536,
+   "decode_tps": [
+    140.972,
+    144.32,
+    148.283
+   ],
+   "median_decode_tps": 144.32
+  },
+  {
+   "target_tokens": 131072,
+   "decode_tps": [
+    116.45,
+    124.385,
+    118.241
+   ],
+   "median_decode_tps": 118.241
+  }
+ ],
+ "quality": {
+  "correctness": {
+   "run_id": "correctness-v1.20261111T112007Z.f483e1df",
+   "verdict": "valid"
+  },
+  "needle": {
+   "run_id": "quality-gate.20261111T113333Z.07bde63e",
+   "passed": 16,
+   "total": 16,
+   "contexts": [
+    "4k",
+    "16k",
+    "32k",
+    "64k"
+   ]
+  },
+  "context_window": {
+   "run_id": "quality-gate.20261111T161231Z.b5a56af4",
+   "max_model_len": 163840,
+   "accepted_prompt_tokens": 163839,
+   "refused_prompt_tokens": 163840
+  },
+  "humaneval": {
+   "run_id": "quality-gate.20261111T113538Z.b2080ea4",
+   "pass_at_1": {
+    "chat": {
+     "passed": 155,
+     "total": 164
+    },
+    "completion": {
+     "passed": 127,
+     "total": 164
+    }
+   },
+   "protocol": {
+    "chat": "EvalPlus instruct prompt, 1,024 tokens, thinking off, greedy",
+    "completion": "Codex-paper raw prompt on /v1/completions, 512 tokens, standard stop strings",
+    "scoring": "OpenAI human_eval check_correctness, 3 s limit"
+   }
+  },
+  "gsm8k": {
+   "run_id": "quality-gate.20261111T113659Z.34304932",
+   "accuracy": {
+    "chat": {
+     "passed": 1266,
+     "total": 1319
+    },
+    "completion": {
+     "passed": 1058,
+     "total": 1319
+    }
+   },
+   "protocol": {
+    "source": "vLLM tests/evals/gsm8k/gsm8k_eval.py, 5-shot, last integer in the reply",
+    "chat": "--use-chat-completions mode, 1,024 tokens, thinking off, temperature 0",
+    "completion": "script default, 256 tokens, temperature 0"
+   }
+  },
+  "gpqa_diamond": {
+   "run_id": "quality-gate.20261111T114900Z.f6e23b42",
+   "passed": 170,
+   "total": 198,
+   "truncated": 8,
+   "protocol": "OpenAI simple-evals prompt and answer pattern; thinking on, temperature 1.0, top_p 0.95, top_k 20, up to 65,536 tokens per reply, one pass"
+  },
+  "vision": {
+   "run_id": "vision-v1.20261111T112031Z.c233c3d6",
+   "passed": 7,
+   "total": 7
+  }
+ }
+}
